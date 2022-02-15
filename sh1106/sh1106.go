@@ -2,7 +2,7 @@
 //
 // Copied from https://github.com/toyo/tinygo-sh1106 (under BSD 3-clause license)
 //
-package sh1106
+package sh1106 // import "tinygo.org/x/drivers/sh1106"
 
 import (
 	"errors"
