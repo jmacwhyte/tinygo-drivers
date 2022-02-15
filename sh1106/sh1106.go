@@ -235,6 +235,10 @@ func (d *Device) SetBuffer(buffer []byte) error {
 	return nil
 }
 
+func (d *Device) SetScroll(line int16) {
+	d.Command(SETSTARTLINE + uint8(line&0b111111))
+}
+
 // Command sends a command to the display
 func (d *Device) Command(command uint8) {
 	d.bus.tx([]byte{command}, true)
@@ -285,7 +289,7 @@ func (b *I2CBus) tx(data []byte, isCommand bool) {
 func (b *SPIBus) tx(data []byte, isCommand bool) {
 	if isCommand {
 		b.csPin.High()
-		time.Sleep(1 * time.Millisecond)
+		time.Sleep(100 * time.Microsecond)
 		b.dcPin.Low()
 		b.csPin.Low()
 
@@ -293,7 +297,7 @@ func (b *SPIBus) tx(data []byte, isCommand bool) {
 		b.csPin.High()
 	} else {
 		b.csPin.High()
-		time.Sleep(1 * time.Millisecond)
+		time.Sleep(100 * time.Microsecond)
 		b.dcPin.High()
 		b.csPin.Low()
 
